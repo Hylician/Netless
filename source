@@ -3,12 +3,22 @@ local Players = game:GetService("Players")
 
 local Player = Players.LocalPlayer
 local Character = Player.Character or Player.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
 
+local Connections = {}
 local Intensity = getrenv().Intensity or 45
 for Index, Object in pairs(Character:GetDescendants()) do
   if Object:IsA("BasePart") and Object.Name ~= "HumanoidRootPart" then
-    RunService.Heartbeat:Connect(function()
+    local Connection = RunService.Heartbeat:Connect(function()
       Object.Velocity = Vector3.new(Intensity, 0, 0)
     end)
+    
+    table.insert(Connections, Connection)
   end
 end
+
+Humanoid.Died:Connect(function()
+  for Index, Connection in pairs(Connections) do
+    Connection:Disconnect()
+  end
+end)
