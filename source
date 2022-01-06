@@ -4,6 +4,7 @@ local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 local Character = Player.Character or Player.CharacterAdded:Wait()
 local Humanoid = Character:WaitForChild("Humanoid")
+local RootPart = Character:WaitForChild("HumanoidRootPart")
 
 local Connections = {}
 local Intensity = getgenv().Intensity or 45
@@ -17,8 +18,18 @@ for Index, Object in pairs(Character:GetDescendants()) do
   end
 end
 
-Humanoid.Died:Connect(function()
+local function Disconnect()
   for Index, Connection in pairs(Connections) do
     Connection:Disconnect()
+  end
+end
+
+Humanoid.Died:Connect(function()
+  Disconnect()
+end)
+
+RootPart.AncestryChanged:Connect(function(Child, Parent)
+  if not Parent then
+    Disconnect()
   end
 end)
