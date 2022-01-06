@@ -6,7 +6,7 @@ local Character = Player.Character or Player.CharacterAdded:Wait()
 local Humanoid = Character:WaitForChild("Humanoid")
 
 local Connections = {}
-local Intensity = getrenv().Intensity or 45
+local Intensity = getgenv().Intensity or 45
 for Index, Object in pairs(Character:GetDescendants()) do
   if Object:IsA("BasePart") and Object.Name ~= "HumanoidRootPart" then
     local Connection = RunService.Heartbeat:Connect(function()
