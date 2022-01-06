@@ -9,27 +9,25 @@ local RootPart = Character:WaitForChild("HumanoidRootPart")
 local Connections = {}
 local Intensity = getgenv().Intensity or 45
 for Index, Object in pairs(Character:GetDescendants()) do
-  if Object:IsA("BasePart") and Object.Name ~= "HumanoidRootPart" then
-    local Connection = RunService.Heartbeat:Connect(function()
-      Object.Velocity = Vector3.new(Intensity, 0, 0)
-    end)
-    
-    table.insert(Connections, Connection)
-  end
+	if Object:IsA("BasePart") and Object.Name ~= "HumanoidRootPart" then
+		table.insert(Connections, RunService.Heartbeat:Connect(function()
+			Object.Velocity = Vector3.new(Intensity, 0, 0)
+		end))
+	end
 end
 
 local function Disconnect()
-  for Index, Connection in pairs(Connections) do
-    Connection:Disconnect()
-  end
+	for Index, Connection in pairs(Connections) do
+		Connection:Disconnect()
+	end
 end
 
 Humanoid.Died:Connect(function()
-  Disconnect()
+	Disconnect()
 end)
 
 RootPart.AncestryChanged:Connect(function(Child, Parent)
-  if not Parent then
-    Disconnect()
-  end
+	if not Parent then
+		Disconnect()
+	end
 end)
