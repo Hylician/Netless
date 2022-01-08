@@ -18,7 +18,6 @@ coroutine.wrap(function()
 	end
 	
 	table.insert(Connections, RunService.RenderStepped:Connect(function()
-		print("Main")
 		settings().Physics.PhysicsEnvironmentalThrottle = Enum.EnviromentalPhysicsThrottle.Disabled
 		settings().Physics.AllowSleep = false
 		setsimulationradius(math.huge, math.huge)
