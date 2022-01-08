@@ -18,15 +18,17 @@ coroutine.wrap(function()
     end
 end)()
 
+--[[
 local MainConnection = RunService.RenderStepped:Connect(function()
 	settings().Physics.PhysicsEnvironmentalThrottle = Enum.EnviromentalPhysicsThrottle.Disabled
 	settings().Physics.AllowSleep = false
 	Player.ReplicationFocus = workspace
 	setsimulationradius(math.huge, math.huge)
 end)
+]]
 
 local function Disconnect()
-	MainConnection:Disconnect()
+	-- MainConnection:Disconnect()
 	for Index, Connection in pairs(Connections) do
 		Connection:Disconnect()
 	end
