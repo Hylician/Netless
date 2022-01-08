@@ -9,26 +9,23 @@ local RootPart = Character:WaitForChild("HumanoidRootPart")
 local Connections = {}
 local Intensity = getgenv().Intensity or 45
 coroutine.wrap(function()
-    for Index, Object in pairs(Character:GetDescendants()) do
-        if Object:IsA("BasePart") and Object.Name ~= "HumanoidRootPart" then
-            table.insert(Connections, RunService.RenderStepped:Connect(function()
-                Object.Velocity = Vector3.new(Intensity, 0, 0)
-            end))
-        end
-    end
+	for Index, Object in pairs(Character:GetDescendants()) do
+		if Object:IsA("BasePart") and Object.Name ~= "HumanoidRootPart" then
+			table.insert(Connections, RunService.RenderStepped:Connect(function()
+				Object.Velocity = Vector3.new(Intensity, 0, 0)
+			end))
+		end
+	end
+	
+	table.insert(Connections, RunService.RenderStepped:Connect(function()
+		print("Main")
+		settings().Physics.PhysicsEnvironmentalThrottle = Enum.EnviromentalPhysicsThrottle.Disabled
+		settings().Physics.AllowSleep = false
+		setsimulationradius(math.huge, math.huge)
+	end))
 end)()
 
---[[
-local MainConnection = RunService.RenderStepped:Connect(function()
-	settings().Physics.PhysicsEnvironmentalThrottle = Enum.EnviromentalPhysicsThrottle.Disabled
-	settings().Physics.AllowSleep = false
-	Player.ReplicationFocus = workspace
-	setsimulationradius(math.huge, math.huge)
-end)
-]]
-
 local function Disconnect()
-	-- MainConnection:Disconnect()
 	for Index, Connection in pairs(Connections) do
 		Connection:Disconnect()
 	end
