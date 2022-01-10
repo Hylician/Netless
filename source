@@ -11,7 +11,7 @@ local Intensity = getgenv().Intensity or 45
 coroutine.wrap(function()
 	for Index, Object in pairs(Character:GetDescendants()) do
 		if Object:IsA("BasePart") and Object.Name ~= "HumanoidRootPart" then
-			table.insert(Connections, RunService.RenderStepped:Connect(function()
+			table.insert(Connections, RunService.Heartbeat:Connect(function()
 				Object.Velocity = Vector3.new(Intensity, 0, 0)
 			end))
 		end
