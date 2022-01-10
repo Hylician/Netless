@@ -16,12 +16,11 @@ coroutine.wrap(function()
 			end))
 		end
 	end
-	
-	table.insert(Connections, RunService.RenderStepped:Connect(function()
+	--[[table.insert(Connections, RunService.RenderStepped:Connect(function()
 		settings().Physics.PhysicsEnvironmentalThrottle = Enum.EnviromentalPhysicsThrottle.Disabled
 		settings().Physics.AllowSleep = false
 		setsimulationradius(math.huge, math.huge)
-	end))
+	end))]]
 end)()
 
 local function Disconnect()
